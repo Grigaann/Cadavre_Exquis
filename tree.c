@@ -40,87 +40,90 @@ void create_tree(t_tree* tree) {
     tree->root = first_node;
 }
 
-void print_tree(p_node tree) {
+void print_tree(p_node tree, int it) {
     if (tree == NULL) {
         return;
     }
-    printf("%c", tree->character);
+    for (int i = 0; i < it; i++) {
+        printf("    ");
+    }
+    printf("%c\n", tree->character);
     if (tree->A != NULL) {
-        print_tree(tree->A);
+        print_tree(tree->A, it+1);
     }
     if (tree->B != NULL) {
-        print_tree(tree->B);
+        print_tree(tree->B, it+1);
     }
     if (tree->C != NULL) {
-        print_tree(tree->C);
+        print_tree(tree->C, it+1);
     }
     if (tree->D != NULL) {
-        print_tree(tree->D);
+        print_tree(tree->D, it+1);
     }
     if (tree->E != NULL) {
-        print_tree(tree->E);
+        print_tree(tree->E, it+1);
     }
     if (tree->F != NULL) {
-        print_tree(tree->F);
+        print_tree(tree->F, it+1);
     }
     if (tree->G != NULL) {
-        print_tree(tree->G);
+        print_tree(tree->G, it+1);
     }
     if (tree->H != NULL) {
-        print_tree(tree->H);
+        print_tree(tree->H, it+1);
     }
     if (tree->I != NULL) {
-        print_tree(tree->I);
+        print_tree(tree->I, it+1);
     }
     if (tree->J != NULL) {
-        print_tree(tree->J);
+        print_tree(tree->J, it+1);
     }
     if (tree->K != NULL) {
-        print_tree(tree->K);
+        print_tree(tree->K, it+1);
     }
     if (tree->L != NULL) {
-        print_tree(tree->L);
+        print_tree(tree->L, it+1);
     }
     if (tree->M != NULL) {
-        print_tree(tree->M);
+        print_tree(tree->M, it+1);
     }
     if (tree->N != NULL) {
-        print_tree(tree->N);
+        print_tree(tree->N, it+1);
     }
     if (tree->O != NULL) {
-        print_tree(tree->O);
+        print_tree(tree->O, it+1);
     }
     if (tree->P != NULL) {
-        print_tree(tree->P);
+        print_tree(tree->P, it+1);
     }
     if (tree->Q != NULL) {
-        print_tree(tree->Q);
+        print_tree(tree->Q, it+1);
     }
     if (tree->R != NULL) {
-        print_tree(tree->R);
+        print_tree(tree->R, it+1);
     }
     if (tree->S != NULL) {
-        print_tree(tree->S);
+        print_tree(tree->S, it+1);
     }
     if (tree->T != NULL) {
-        print_tree(tree->T);
+        print_tree(tree->T, it+1);
     }
     if (tree->U != NULL) {
-        print_tree(tree->U);
+        print_tree(tree->U, it+1);
     }
     if (tree->V != NULL) {
-        print_tree(tree->V);
+        print_tree(tree->V, it+1);
     }
     if (tree->W != NULL) {
-        print_tree(tree->W);
+        print_tree(tree->W, it+1);
     }
     if (tree->X != NULL) {
-        print_tree(tree->X);
+        print_tree(tree->X, it+1);
     }
     if (tree->Y != NULL) {
-        print_tree(tree->Y);
+        print_tree(tree->Y, it+1);
     }
     if (tree->Z != NULL) {
-        print_tree(tree->Z);
+        print_tree(tree->Z, it+1);
     }
 }
