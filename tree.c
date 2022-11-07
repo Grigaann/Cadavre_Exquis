@@ -35,9 +35,11 @@ p_node create_node(char character) {
     return node;
 }
 
-void create_tree(t_tree* tree) {
+t_tree* create_tree() {
+    t_tree* tree = malloc(sizeof(t_node));
     p_node first_node = create_node('-');
     tree->root = first_node;
+    return tree;
 }
 
 void print_tree(p_node tree, int depth) {
