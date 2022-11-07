@@ -44,9 +44,11 @@ void print_tree(p_node tree, int depth) {
     if (tree == NULL) {
         return;
     }
+
     for (int i = 0; i < depth; i++) {
         printf("    ");
     }
+
     printf("%c\n", tree->character);
     if (tree->A != NULL) {
         print_tree(tree->A, depth + 1);
