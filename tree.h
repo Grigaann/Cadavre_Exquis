@@ -12,7 +12,7 @@ typedef struct s_tree {
 } t_tree;
 
 p_node create_node(char character);
-void print_tree(p_node tree, int it);
+void print_tree(p_node tree, int depth);
 void create_tree(t_tree* tree);
 
 #endif //CADAVRE_EXQUIS_TREE_H
