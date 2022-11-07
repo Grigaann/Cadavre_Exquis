@@ -2,6 +2,7 @@
 // Created by FenrisÃºlfr on 30/10/2022.
 //
 #include "tree.h"
+#include <string.h>
 
 p_node create_node(char character) {
     p_node node = malloc(sizeof(t_node));
@@ -131,3 +132,45 @@ void print_tree(p_node tree, int depth) {
         print_tree(tree->Z, depth + 1);
     }
 }
+
+t_tree** initialize_trees(){
+    FILE* file = fopen("../assets/dictionary.txt", "r");
+
+    if (file == NULL) {
+        printf("\n!!!Error opening file!!!\n");
+        exit(1);
+    }
+
+    t_tree* ptr_name_tree = create_tree();
+    t_tree* ptr_adj_tree = create_tree();
+    t_tree* ptr_verbs_tree = create_tree();
+    t_tree* ptr_adverbs_tree = create_tree();
+    t_tree* array_trees[4] = {ptr_name_tree, ptr_adj_tree, ptr_verbs_tree, ptr_adverbs_tree};
+
+    while (1){
+        char line[256];
+        if (fgets(line, sizeof(line), file)) {
+            char* token = strtok(line, " ");
+            int i = 0;
+            while (token != NULL) {
+                if (strstr(token, "Nom:Mas+SG") != NULL) {
+                    printf("NOM\n");
+                } else if (strstr(token, "ADJ:Mas+SG") != NULL) {
+                    printf("ADJ\n");
+                } else if (strstr(token, "Ver:Inf") != NULL) {
+                    printf("VER\n");
+                } else if (strstr(token, "Adv") != NULL) {
+                    printf("ADV\n");
+                }
+                token = strtok(NULL, " ");
+                i++;
+            }
+        } else {
+            break;
+        }
+    }
+
+    fclose(file);
+    return array_trees;
+}
+

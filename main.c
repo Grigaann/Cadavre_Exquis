@@ -9,4 +9,8 @@ int main() {
     ptr_tree->root->A->C = create_node('C');
     ptr_tree->root->A->D = create_node('D');
     print_tree(ptr_tree->root, 0);
+
+    t_tree** trees = initialize_trees();
+
+    return 0;
 }

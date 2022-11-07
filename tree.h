@@ -14,5 +14,6 @@ typedef struct s_tree {
 p_node create_node(char character);
 void print_tree(p_node tree, int depth);
 t_tree* create_tree();
+t_tree** initialize_trees();
 
 #endif //CADAVRE_EXQUIS_TREE_H
