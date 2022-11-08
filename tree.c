@@ -43,6 +43,21 @@ t_tree* create_tree() {
     return tree;
 }
 
+char* get_word(char* token) {
+    char* word = malloc(sizeof(char) * strlen(token));
+    int i = 0;
+    while (token[i] != '\0') {
+        if (token[i] == ' ') {
+            word[i] = '\0';
+            break;
+        }
+        word[i] = token[i];
+        i++;
+    }
+    printf("word: %s", word);
+    return word;
+}
+
 void print_tree(p_node tree, int depth) {
     if (tree == NULL) {
         return;
@@ -151,19 +166,17 @@ t_tree** initialize_trees(){
         char line[256];
         if (fgets(line, sizeof(line), file)) {
             char* token = strtok(line, " ");
-            int i = 0;
             while (token != NULL) {
                 if (strstr(token, "Nom:Mas+SG") != NULL) {
-                    printf("NOM\n");
+                    get_word(token);
                 } else if (strstr(token, "ADJ:Mas+SG") != NULL) {
-                    printf("ADJ\n");
+                    printf("ADJECTIVE\n");
                 } else if (strstr(token, "Ver:Inf") != NULL) {
-                    printf("VER\n");
+                    printf("VERB\n");
                 } else if (strstr(token, "Adv") != NULL) {
-                    printf("ADV\n");
+                    printf("ADVERB\n");
                 }
                 token = strtok(NULL, " ");
-                i++;
             }
         } else {
             break;
@@ -173,4 +186,6 @@ t_tree** initialize_trees(){
     fclose(file);
     return array_trees;
 }
+
+
 
