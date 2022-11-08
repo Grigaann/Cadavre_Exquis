@@ -8,32 +8,35 @@
 
 typedef struct s_node {
     char character;
-    struct s_node* A;
-    struct s_node* B;
-    struct s_node* C;
-    struct s_node* D;
-    struct s_node* E;
-    struct s_node* F;
-    struct s_node* G;
-    struct s_node* H;
-    struct s_node* I;
-    struct s_node* J;
-    struct s_node* K;
-    struct s_node* L;
-    struct s_node* M;
-    struct s_node* N;
-    struct s_node* O;
-    struct s_node* P;
-    struct s_node* Q;
-    struct s_node* R;
-    struct s_node* S;
-    struct s_node* T;
-    struct s_node* U;
-    struct s_node* V;
-    struct s_node* W;
-    struct s_node* X;
-    struct s_node* Y;
-    struct s_node* Z;
+    char* word;
+    struct s_node* a;
+    struct s_node* b;
+    struct s_node* c;
+    struct s_node* d;
+    struct s_node* e;
+    struct s_node* f;
+    struct s_node* g;
+    struct s_node* h;
+    struct s_node* i;
+    struct s_node* j;
+    struct s_node* k;
+    struct s_node* l;
+    struct s_node* m;
+    struct s_node* n;
+    struct s_node* o;
+    struct s_node* p;
+    struct s_node* q;
+    struct s_node* r;
+    struct s_node* s;
+    struct s_node* t;
+    struct s_node* u;
+    struct s_node* v;
+    struct s_node* w;
+    struct s_node* x;
+    struct s_node* y;
+    struct s_node* z;
 } t_node, *p_node;
+
+int exists(t_node* node);
 
 #endif //CADAVRE_EXQUIS_NODE_H
