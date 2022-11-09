@@ -1,16 +1,10 @@
 #include <stdio.h>
-#include <stdlib.h>
+
 #include "tree.h"
 #include "node.h"
 
 int main() {
-    t_tree* ptr_tree = create_tree();
-    ptr_tree->root->A = create_node('A');
-    ptr_tree->root->A->C = create_node('C');
-    ptr_tree->root->A->D = create_node('D');
-    print_tree(ptr_tree->root, 0);
-
     t_tree** trees = initialize_trees();
-
+    print_tree(trees[2]->root, 0);
     return 0;
 }
