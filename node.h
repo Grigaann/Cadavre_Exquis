@@ -19,7 +19,7 @@ typedef struct s_std_list {
 } t_std_list;
 
 t_std_list create_list();
-void add_cell(p_cell list, char character);
+p_cell add_cell(t_std_list list, char character);
 
 typedef struct s_node {
     char character;

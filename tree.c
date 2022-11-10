@@ -5,16 +5,16 @@
 #include <string.h>
 
 p_node create_node(char character) {
-    p_node node = malloc(sizeof(t_node));
-    node->character = character;
-    node->word = NULL;
-    node->children = create_list();
+    p_node ptr_node = malloc(sizeof(t_node));
+    ptr_node->character = character;
+    ptr_node->word = NULL;
+    ptr_node->children = create_list();
 
-    return node;
+    return ptr_node;
 }
 
 t_tree* create_tree() {
-    t_tree* tree = malloc(sizeof(t_node));
+    t_tree* tree = malloc(sizeof(p_node));
     p_node first_node = create_node('-');
     tree->root = first_node;
     tree->root->children = create_list();
@@ -44,11 +44,14 @@ void print_tree(p_node node, int depth) {
         printf("\t");
     }
     printf("%c", node->character);
-    p_cell current_cell = node->children.first;
-    while(current_cell->next != NULL) {
-        printf("je suis la");
-        print_tree(current_cell->next_node, depth + 1);
-        current_cell = current_cell->next;
+    if(node->children.first != NULL){
+        p_cell current_cell = node->children.first;
+
+        while(current_cell->next != NULL) {
+            printf("je suis la");
+            print_tree(current_cell->next_node, depth + 1);
+            current_cell = current_cell->next;
+        }
     }
 }
 
@@ -65,17 +68,16 @@ void add_word_to_tree(char* word, t_node* node, int iteration) {
             }
             current_cell = current_cell->next;
         }
-        p_cell added_cell = add_cell(current_cell, word[iteration]);
-        if(node->children.first == NULL){
-            node->children.first = added_cell;
-        }
+
+        p_cell added_cell = add_cell(node->children, word[iteration]);
+
         added_cell->next_node = create_node(word[iteration]);
     }
 
 }
 
 t_tree** initialize_trees(){
-    FILE* file = fopen("../assets/dictionary.txt", "r");
+    FILE* file = fopen("../assets/dictionary_chill.txt", "r");
 
     if (file == NULL) {
         printf("\n!!!Error opening file!!!\n");
@@ -90,22 +92,27 @@ t_tree** initialize_trees(){
 
     while (1){
         char line[256];
-        if (fgets(line, sizeof(line), file)) {
+        if (fgets(line, sizeof(line), file) != NULL) {
             char* token = strtok(line, "\t");
             int i = 0;
             while (token != NULL) {
+
                 i++;
                 if (i == 2){
-                    printf("word = %s \n", get_word(token));
-                }
-                if (strstr(token, "Nom:Mas+SG") != NULL && (i == 2)){
-                    add_word_to_tree(get_word(token), ptr_name_tree->root, 0);
-                } else if (strstr(token, "Adj:Mas+SG") != NULL && (i == 2)) {
-                    add_word_to_tree(get_word(token), ptr_adj_tree->root, 0);
-                } else if (strstr(token, "Ver:Inf") != NULL && (i == 2)) {
-                    add_word_to_tree(get_word(token), ptr_verbs_tree->root, 0);
-                } else if (strstr(token, "Adv") != NULL && (i == 2)) {
-                    add_word_to_tree(get_word(token), ptr_adverbs_tree->root, 0);
+
+                    if (strstr(token, "Nom:Mas+SG") != NULL){ //TODO : changer node.word so that we can
+                        printf("je suis la");
+                        add_word_to_tree(get_word(token), ptr_name_tree->root, 0);
+                    } else if (strstr(token, "Adj:Mas+SG") != NULL) {
+                        printf("je suis la");
+                        add_word_to_tree(get_word(token), ptr_adj_tree->root, 0);
+                    } else if (strstr(token, "Ver:Inf") != NULL) {
+                        printf("je suis la");
+                        add_word_to_tree(get_word(token), ptr_verbs_tree->root, 0);
+                    } else if (strstr(token, "Adv") != NULL) {
+                        printf("je suis la");
+                        add_word_to_tree(get_word(token), ptr_adverbs_tree->root, 0);
+                    }
                 }
                 token = strtok(NULL, "\t");
             }
@@ -115,6 +122,7 @@ t_tree** initialize_trees(){
     }
     print_tree(ptr_adj_tree->root, 0);
     fclose(file);
+
     return array_trees;
 }
 

@@ -20,18 +20,20 @@ t_std_list create_list() {
     return list;
 }
 
-void add_cell(p_cell list, char character) {
+p_cell add_cell(t_std_list list, char character) {
     p_cell new_cell = malloc(sizeof(t_cell));
     new_cell->character = character;
     new_cell->next = NULL;
 
-    if (list == NULL) {
-        list = new_cell;
-    } else {
-        p_cell current_cell = list->next;
+    if (list.first != NULL) {
+        p_cell current_cell = list.first;
         while (current_cell->next != NULL) {
             current_cell = current_cell->next;
         }
         current_cell->next = new_cell;
+    } else {
+        list.first = new_cell;
     }
+
+    return new_cell;
 }
