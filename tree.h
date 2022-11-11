@@ -11,10 +11,17 @@ typedef struct s_tree {
     p_node root;
 } t_tree;
 
+typedef struct s_list_tree{
+    t_tree* name_tree;
+    t_tree* adj_tree;
+    t_tree* verb_tree;
+    t_tree* adv_tree;
+} tree_list;
+
 p_node create_node(char character);
 void print_tree(p_node node, int depth);
 t_tree* create_tree();
-t_tree** initialize_trees();
+tree_list initialize_trees();
 char* get_word(char* token);
 
 #endif //CADAVRE_EXQUIS_TREE_H

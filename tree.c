@@ -18,6 +18,7 @@ t_tree* create_tree() {
     p_node first_node = create_node('-');
     tree->root = first_node;
     tree->root->children = create_list();
+    tree->root->children.first = NULL;
     return tree;
 }
 
@@ -43,15 +44,17 @@ void print_tree(p_node node, int depth) {
     for (int i = 0; i < depth; i++) {
         printf("\t");
     }
-    printf("%c", node->character);
-    if(node->children.first != NULL){
-        p_cell current_cell = node->children.first;
 
-        while(current_cell->next != NULL) {
-            printf("je suis la");
+    printf("%c\n", node->character);
+    if(node->children.first != NULL){
+     p_cell current_cell = node->children.first;
+        do {
+
             print_tree(current_cell->next_node, depth + 1);
             current_cell = current_cell->next;
-        }
+        } while(current_cell != NULL);
+
+
     }
 }
 
@@ -76,7 +79,7 @@ void add_word_to_tree(char* word, t_node* node, int iteration) {
 
 }
 
-t_tree** initialize_trees(){
+tree_list initialize_trees(){
     FILE* file = fopen("../assets/dictionary_chill.txt", "r");
 
     if (file == NULL) {
@@ -84,11 +87,12 @@ t_tree** initialize_trees(){
         exit(1);
     }
 
-    t_tree* ptr_name_tree = create_tree();
-    t_tree* ptr_adj_tree = create_tree();
-    t_tree* ptr_verbs_tree = create_tree();
-    t_tree* ptr_adverbs_tree = create_tree();
-    t_tree* array_trees[4] = {ptr_name_tree, ptr_adj_tree, ptr_verbs_tree, ptr_adverbs_tree};
+    tree_list treeList;
+
+    treeList.name_tree = create_tree();
+    treeList.adj_tree = create_tree();
+    treeList.verb_tree = create_tree();
+    treeList.adv_tree = create_tree();
 
     while (1){
         char line[256];
@@ -100,18 +104,18 @@ t_tree** initialize_trees(){
                 i++;
                 if (i == 2){
 
-                    if (strstr(token, "Nom:Mas+SG") != NULL){ //TODO : changer node.word so that we can
+                    if (strstr(token, "Nom:Mas+SG") != NULL){ //TODO : faire les autres genres etc
                         printf("je suis la");
-                        add_word_to_tree(get_word(token), ptr_name_tree->root, 0);
+                        add_word_to_tree(get_word(token), treeList.name_tree->root, 0);
                     } else if (strstr(token, "Adj:Mas+SG") != NULL) {
                         printf("je suis la");
-                        add_word_to_tree(get_word(token), ptr_adj_tree->root, 0);
+                        add_word_to_tree(get_word(token), treeList.adj_tree->root, 0);
                     } else if (strstr(token, "Ver:Inf") != NULL) {
                         printf("je suis la");
-                        add_word_to_tree(get_word(token), ptr_verbs_tree->root, 0);
+                        add_word_to_tree(get_word(token), treeList.verb_tree->root, 0);
                     } else if (strstr(token, "Adv") != NULL) {
                         printf("je suis la");
-                        add_word_to_tree(get_word(token), ptr_adverbs_tree->root, 0);
+                        add_word_to_tree(get_word(token), treeList.adv_tree->root, 0);
                     }
                 }
                 token = strtok(NULL, "\t");
@@ -120,11 +124,9 @@ t_tree** initialize_trees(){
             break;
         }
     }
-    print_tree(ptr_adj_tree->root, 0);
     fclose(file);
 
-    return array_trees;
+    return treeList;
 }
-
 
 
