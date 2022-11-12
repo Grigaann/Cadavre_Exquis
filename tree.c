@@ -80,7 +80,7 @@ void add_word_to_tree(char* word, t_node* node, int iteration) {
 }
 
 tree_list initialize_trees(){
-    FILE* file = fopen("../assets/dictionary_chill.txt", "r");
+    FILE* file = fopen("../assets/dictionary_testing.txt", "r");
 
     if (file == NULL) {
         printf("\n!!!Error opening file!!!\n");
