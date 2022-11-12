@@ -47,7 +47,7 @@ void print_tree(p_node node, int depth) {
 
     printf("%c\n", node->character);
     if(node->children.first != NULL){
-     p_cell current_cell = node->children.first;
+        p_cell current_cell = node->children.first;
         do {
 
             print_tree(current_cell->next_node, depth + 1);

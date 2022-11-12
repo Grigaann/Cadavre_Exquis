@@ -11,10 +11,22 @@ int main() {
     tree->root->children = create_list() ;
     tree->root->children.first = add_cell(tree->root->children, 'a');
     tree->root->children.first->next_node = create_node('A');
+
     tree->root->children.first->next = add_cell(tree->root->children, 'b');
     tree->root->children.first->next->next_node = create_node('B');
-    tree->root->children.first->next->next_node->children.first = add_cell(tree->root->children, 'e');
+
+    tree->root->children.first->next->next_node->children.first = add_cell(tree->root->children.first->next->next_node->children, 'e');
     tree->root->children.first->next->next_node->children.first->next_node = create_node('E');
+
+    tree->root->children.first->next->next_node->children.first->next_node->children.first =
+            add_cell(tree->root->children.first->next->next_node->children.first->next_node->children, 'l');
+    tree->root->children.first->next->next_node->children.first->next_node->children.first->next_node = create_node('L');
+
+
+    tree->root->children.first->next->next_node->children.first->next = add_cell(tree->root->children.first->next->next_node->children, 'i');
+    tree->root->children.first->next->next_node->children.first->next->next_node = create_node('I');
+
+
     print_tree(tree->root, 0);
     return 0;
 }
