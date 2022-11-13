@@ -147,3 +147,71 @@ tree_list initialize_trees()
     return treeList;
 }
 
+void is_exist_tree(char* word,t_tree* list)
+{
+     p_node tmp;
+     tmp = list->root;
+     int i = 0;
+     while(word[i] != '\0')
+     {
+         int exist = is_exist_list(tmp->children.first, word[i]);
+         if(exist != -1)
+         {
+             p_cell p = tmp->children.first;
+             for(int j = 0; j < exist; j++)
+             {
+                 p = p->next;
+
+             }
+             tmp = p->next_node;
+         }
+         else
+         {
+             break;
+         }
+         i++;
+
+
+     }
+     printf("%s,%s", tmp->word,word);
+     if (tmp->word == word)
+     {
+         printf("This word exists in the tree !");
+
+     }
+     else
+     {
+         printf("This word doesn't exist in the tree");
+
+     }
+
+}
+
+int is_exist_list(p_cell p,char ch)
+{
+    int i,j = 0;
+    while(p != NULL && i == 0)
+
+    {
+        if(p->character == ch)
+        {
+            j++;
+            i = 1;
+
+        }
+        else
+        {
+            j++;
+            p = p->next;
+        }
+
+    }
+    if(i == 1)
+    {
+        return j;
+    }
+    else
+    {
+        return -1;
+    }
+}
