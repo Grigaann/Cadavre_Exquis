@@ -47,7 +47,7 @@ void print_tree(p_node node, int depth) {
 
     printf("%c\n", node->character);
     if(node->children.first != NULL){
-        p_cell current_cell = node->children.first;
+     p_cell current_cell = node->children.first;
         do {
 
             print_tree(current_cell->next_node, depth + 1);
@@ -79,8 +79,9 @@ void add_word_to_tree(char* word, t_node* node, int iteration) {
 
 }
 
-tree_list initialize_trees(){
-    FILE* file = fopen("../assets/dictionary_testing.txt", "r");
+tree_list initialize_trees()
+{
+    FILE *file = fopen("../assets/dictionary_testing.txt", "r");
 
     if (file == NULL) {
         printf("\n!!!Error opening file!!!\n");
@@ -94,39 +95,47 @@ tree_list initialize_trees(){
     treeList.verb_tree = create_tree();
     treeList.adv_tree = create_tree();
 
-    while (1){
+    while (1)
+    {
         char line[256];
-        if (fgets(line, sizeof(line), file) != NULL) {
-            char* token = strtok(line, "\t");
-            int i = 0;
-            while (token != NULL) {
+        if (fgets(line, sizeof(line), file) != NULL)
+        {
+            char *token = strtok(line, "\t");
+            char *motflechi = token;
+            token = strtok(NULL, "\t");
+            char *motbase = token;
+            token = strtok(NULL, "\t");
+            char *genre = token;
 
-                i++;
-                if (i == 2){
-
-                    if (strstr(token, "Nom:Mas+SG") != NULL){ //TODO : faire les autres genres etc
-                        printf("je suis la");
-                        add_word_to_tree(get_word(token), treeList.name_tree->root, 0);
-                    } else if (strstr(token, "Adj:Mas+SG") != NULL) {
-                        printf("je suis la");
-                        add_word_to_tree(get_word(token), treeList.adj_tree->root, 0);
-                    } else if (strstr(token, "Ver:Inf") != NULL) {
-                        printf("je suis la");
-                        add_word_to_tree(get_word(token), treeList.verb_tree->root, 0);
-                    } else if (strstr(token, "Adv") != NULL) {
-                        printf("je suis la");
-                        add_word_to_tree(get_word(token), treeList.adv_tree->root, 0);
+            while (token != NULL)
+            {
+                if (strcmp(motflechi, motbase) == 0) {
+                    if (strstr(genre, "Nom:") != NULL) {
+                        printf("nom, %s, %s, %s \n", motflechi,motbase,genre);
+                        add_word_to_tree(motbase, treeList.name_tree->root, 0);
+                    } else if (strstr(genre, "Adj:") != NULL) {
+                        printf("adj, %s, %s, %s \n", motflechi,motbase,genre);
+                        add_word_to_tree(motbase, treeList.adj_tree->root, 0);
+                    } else if (strstr(genre, "Ver:") != NULL) {
+                        printf("ver, %s, %s, %s \n", motflechi,motbase,genre);
+                        add_word_to_tree(motbase, treeList.verb_tree->root, 0);
+                    } else if (strstr(genre, "Adv") != NULL) {
+                        printf("adv, %s, %s, %s \n", motflechi,motbase,genre);
+                        add_word_to_tree(motbase, treeList.adv_tree->root, 0);
                     }
                 }
-                token = strtok(NULL, "\t");
+                token = NULL;
             }
-        } else {
+        }
+        else
+        {
             break;
         }
+
+
     }
     fclose(file);
 
     return treeList;
 }
-
 
