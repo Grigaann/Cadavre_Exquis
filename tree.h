@@ -18,7 +18,6 @@ typedef struct s_list_tree{
     t_tree* adv_tree;
 } tree_list;
 
-p_node create_node(char character);
 void print_tree(p_node node, int depth);
 t_tree* create_tree();
 tree_list initialize_trees();

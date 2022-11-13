@@ -27,6 +27,7 @@ typedef struct s_node {
     t_std_list children;
 } t_node, *p_node;
 
+p_node create_node(char character);
 int exists(t_node* node);
 
 #endif //CADAVRE_EXQUIS_NODE_H

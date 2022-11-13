@@ -6,17 +6,6 @@
 
 
 
-//function that initialize a node and returns a pointer this one
-p_node create_node(char character) {
-    p_node ptr_node = malloc(sizeof(t_node));
-    ptr_node->character = character;
-    ptr_node->word = NULL;
-    ptr_node->children = create_list();
-
-    return ptr_node;
-}
-
-
 //function that initialize a tree
 t_tree* create_tree() {
     t_tree* tree = malloc(sizeof(p_node));
@@ -70,23 +59,32 @@ void print_tree(p_node node, int depth) {
 
 //function that adds a word to a given tree
 void add_word_to_tree(char* word, t_node* node, int iteration) {
+    /*if(node == NULL){
+        node = create_node(word[iteration]);
+    }*/
     p_cell current_cell= node->children.first;
-    if(iteration == strlen(word)-1) {
+
+    if(word[iteration] == '\0') {
         node->word = word;
         printf("%s", word);
         return;
-    } else {
-        while(current_cell != NULL){
-            if(current_cell->character == word[iteration]){
-                return add_word_to_tree(word, current_cell->next_node, iteration + 1);
-            }
-            current_cell = current_cell->next;
-        }
-
-        p_cell added_cell = add_cell(node->children, word[iteration]);
-
-        added_cell->next_node = create_node(word[iteration]);
     }
+    if (current_cell == NULL){
+        node->children.first = add_cell(node->children, word[iteration]);
+    }
+    while (current_cell != NULL) {
+        if(current_cell->character == word[iteration]){
+            return add_word_to_tree(word, current_cell->next_node, iteration + 1);
+        }
+        current_cell = current_cell->next;
+
+    }
+
+
+    p_cell added_cell = add_cell(node->children, word[iteration]);
+
+    added_cell->next_node = create_node(word[iteration]);
+
 
 }
 
@@ -119,23 +117,23 @@ tree_list initialize_trees()
             char *motflechi = token;
             token = strtok(NULL, "\t");
             char *motbase = token;
-            token = strtok(NULL, "\t");
+            token = strtok(NULL, "\n");
             char *genre = token;
 
             while (token != NULL)
             {
                 if (strcmp(motflechi, motbase) == 0) {
                     if (strstr(genre, "Nom:") != NULL) {
-                        printf("nom, %s, %s, %s \n", motflechi,motbase,genre);
+                        //printf("nom, %s, %s, %s \n", motflechi, motbase, genre);
                         add_word_to_tree(motbase, treeList.name_tree->root, 0);
                     } else if (strstr(genre, "Adj:") != NULL) {
-                        printf("adj, %s, %s, %s \n", motflechi,motbase,genre);
+                        //printf("adj, %s, %s, %s \n", motflechi, motbase, genre);
                         add_word_to_tree(motbase, treeList.adj_tree->root, 0);
                     } else if (strstr(genre, "Ver:") != NULL) {
-                        printf("ver, %s, %s, %s \n", motflechi,motbase,genre);
+                        //printf("ver, %s, %s, %s \n", motflechi, motbase, genre);
                         add_word_to_tree(motbase, treeList.verb_tree->root, 0);
                     } else if (strstr(genre, "Adv") != NULL) {
-                        printf("adv, %s, %s, %s \n", motflechi,motbase,genre);
+                        //printf("adv, %s, %s, %s \n", motflechi, motbase, genre);
                         add_word_to_tree(motbase, treeList.adv_tree->root, 0);
                     }
                 }

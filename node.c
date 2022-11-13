@@ -10,6 +10,15 @@ int exists(t_node* node){
     return node != NULL;
 }
 
+//function that initialize a node and returns a pointer this one
+p_node create_node(char character) {
+    p_node ptr_node = malloc(sizeof(t_node));
+    ptr_node->character = character;
+    ptr_node->word = NULL;
+    ptr_node->children = create_list();
+
+    return ptr_node;
+}
 
 
 // LIST PART
@@ -29,6 +38,8 @@ p_cell add_cell(t_std_list list, char character) {
     p_cell new_cell = malloc(sizeof(t_cell));
     new_cell->character = character;
     new_cell->next = NULL;
+    new_cell->next_node = create_node(character);
+
 
     //the following lines permits to add the brand-new cell at the end of the given std_list
     if (list.first != NULL) {
