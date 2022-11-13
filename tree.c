@@ -4,6 +4,9 @@
 #include "tree.h"
 #include <string.h>
 
+
+
+//function that initialize a node and returns a pointer this one
 p_node create_node(char character) {
     p_node ptr_node = malloc(sizeof(t_node));
     ptr_node->character = character;
@@ -13,6 +16,8 @@ p_node create_node(char character) {
     return ptr_node;
 }
 
+
+//function that initialize a tree
 t_tree* create_tree() {
     t_tree* tree = malloc(sizeof(p_node));
     p_node first_node = create_node('-');
@@ -22,6 +27,8 @@ t_tree* create_tree() {
     return tree;
 }
 
+
+//function to get the base form of a string coming from the dictionary
 char* get_word(char* token) {
     char* word = malloc(sizeof(char) * strlen(token));
     int i = 0;
@@ -36,6 +43,8 @@ char* get_word(char* token) {
     return word;
 }
 
+
+//function that print the tree (useful for testing and debugging)
 void print_tree(p_node node, int depth) {
     if (node == NULL) {
         return;
@@ -47,7 +56,7 @@ void print_tree(p_node node, int depth) {
 
     printf("%c\n", node->character);
     if(node->children.first != NULL){
-     p_cell current_cell = node->children.first;
+        p_cell current_cell = node->children.first;
         do {
 
             print_tree(current_cell->next_node, depth + 1);
@@ -58,6 +67,8 @@ void print_tree(p_node node, int depth) {
     }
 }
 
+
+//function that adds a word to a given tree
 void add_word_to_tree(char* word, t_node* node, int iteration) {
     p_cell current_cell= node->children.first;
     if(iteration == strlen(word)-1) {
@@ -79,6 +90,8 @@ void add_word_to_tree(char* word, t_node* node, int iteration) {
 
 }
 
+
+//function to create and fill all the 4 trees (names, adjectives, verbs and adverbs)
 tree_list initialize_trees()
 {
     FILE *file = fopen("../assets/dictionary_testing.txt", "r");
@@ -90,6 +103,8 @@ tree_list initialize_trees()
 
     tree_list treeList;
 
+
+    //creates the empty 4 trees
     treeList.name_tree = create_tree();
     treeList.adj_tree = create_tree();
     treeList.verb_tree = create_tree();
