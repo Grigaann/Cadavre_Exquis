@@ -59,9 +59,6 @@ void print_tree(p_node node, int depth) {
 
 //function that adds a word to a given tree
 void add_word_to_tree(char* word, t_node* node, int iteration) {
-    /*if(node == NULL){
-        node = create_node(word[iteration]);
-    }*/
     p_cell current_cell= node->children.first;
 
     if(word[iteration] == '\0') {
@@ -80,11 +77,9 @@ void add_word_to_tree(char* word, t_node* node, int iteration) {
 
     }
 
-
     p_cell added_cell = add_cell(node->children, word[iteration]);
 
     added_cell->next_node = create_node(word[iteration]);
-
 
 }
 
