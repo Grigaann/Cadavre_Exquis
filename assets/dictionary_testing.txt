@@ -1,3 +1,11 @@
+abandonnataire	abandonnataire	Nom:InvGen+SG
+abandonnates	abandonner	Ver:IPSim+PL+P2
+abandonne	abandonne	Adj:Mas+SG
+abandonne	abandonne	Nom:Mas+SG
+abandonne	abandonner	Ver:IPre+SG+P1:IPre+SG+P3:SPre+SG+P1:SPre+SG+P3:ImPre+SG+P2
+abandonne	abandonner	Ver:PPas+Mas+SG
+abandonnee	abandonne	Adj:Fem+SG
+abandonnee	abandonne	Nom:Fem+SG
 stabilimetre	stabilimetre	Nom:Mas+SG
 stabilisaient	stabiliser	Ver:IImp+PL+P3
 stabilisais	stabiliser	Ver:IImp+SG+P1:IImp+SG+P2

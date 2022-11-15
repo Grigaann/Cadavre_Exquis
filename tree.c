@@ -38,21 +38,16 @@ void print_tree(p_node node, int depth) {
     if (node == NULL) {
         return;
     }
-
     for (int i = 0; i < depth; i++) {
         printf("\t");
     }
-
     printf("%c\n", node->character);
     if(node->children.first != NULL){
         p_cell current_cell = node->children.first;
         do {
-
             print_tree(current_cell->next_node, depth + 1);
             current_cell = current_cell->next;
         } while(current_cell != NULL);
-
-
     }
 }
 
@@ -60,21 +55,23 @@ void print_tree(p_node node, int depth) {
 //function that adds a word to a given tree
 void add_word_to_tree(char* word, t_node* node, int iteration) {
     p_cell current_cell= node->children.first;
-    if(word[iteration] == '\0') { //Todo: word doesn't already exist in node
+    if(word[iteration] == '\0') {
         node->word = malloc((strlen(word)+1)*sizeof(char));
         int t;
         for(t=0;t< strlen(word);t++){
             node->word[t]=word[t];
         }
         node->word[t]='\0';
-        printf("%s is done.\n",node->word);
         return;
     }
-    if (current_cell == NULL){
+    if(node->children.first == NULL){
         node->children.first = add_cell(node->children, word[iteration]);
+        return add_word_to_tree(word, node->children.first->next_node, iteration + 1);
     }
-    current_cell= node->children.first;
-    while (current_cell != NULL) {
+    while (1){
+        if (current_cell == NULL){
+            current_cell = add_cell(node->children, word[iteration]);
+        }
         if(current_cell->character == word[iteration]){
             return add_word_to_tree(word, current_cell->next_node, iteration + 1);
         }
@@ -97,12 +94,10 @@ void add_word_to_tree(char* word, t_node* node, int iteration) {
     treeList.adj_tree = create_tree();
     treeList.verb_tree = create_tree();
     treeList.adv_tree = create_tree();
-    while (1)
-    {
+    while (1){
         char line[256];
-        if (fgets(line, sizeof(line), file) != NULL) // We open the file line by line until reaching a line NULL,
+        if (fgets(line, sizeof(line), file) != NULL){ // We open the file line by line until reaching a line NULL,
             //representing the end of the file
-        {
             char *token = strtok(line, "\t");
             char *motflechi = token; // This variable will take as value the first word of the line
             token = strtok(NULL, "\t");
@@ -112,7 +107,7 @@ void add_word_to_tree(char* word, t_node* node, int iteration) {
 
             while (token != NULL)
             {
-                if (strcmp(motflechi, motbase) == 0) { //This condition is there to make sure that the word we read in the file is in the Base form.
+                if (strcmp(motflechi, motbase) == 0) { //Make sure the word we read in the file is its Base form.
                     if (strstr(genre, "Nom:") != NULL) {
                         //We check if the word read in the txt is a noun
                         add_word_to_tree(motbase, treeList.name_tree->root, 0);
@@ -129,17 +124,14 @@ void add_word_to_tree(char* word, t_node* node, int iteration) {
                 }
                 token = NULL;
             }
-        }
-        else
-        {
+        }else{
             break;
         }
     }
     fclose(file);
     return treeList;
 }
-
-void word_in_tree(const char* word,t_tree* list)
+void word_in_tree(char* word,t_tree* list)
 //Function which verify if a given word exists in one of the four tree.
 {
     p_node tmp;
@@ -149,17 +141,25 @@ void word_in_tree(const char* word,t_tree* list)
     {
         p_cell p = tmp->children.first;
         int j = 0,k=0,exist;
-        while( p!= NULL && k == 0)
+        while(k == 0)
         {
             if(p->character == word[i])
             {
+
                 j++;
                 k = 1;
             }
             else
             {
                 j++;
-                p = p->next;
+                if(p->next == NULL)
+                {
+                    break;
+                }
+                else
+                {
+                    p = p->next;
+                }
             }
 
         }
@@ -191,9 +191,8 @@ void word_in_tree(const char* word,t_tree* list)
         }
         i++;
 
-
     }
-    if (tmp->word == word) // If the word contains in the node of the last character of the given word is equal to the given character then we found that the word exists in the tree
+    if (strcmp(tmp->word,word) == 0) // If the word contains in the node of the last character of the given word is equal to the given character then we found that the word exists in the tree
     {
         printf("This word exists in the tree !");
 
@@ -204,29 +203,21 @@ void word_in_tree(const char* word,t_tree* list)
     }
 }
 
-int is_exist_list(p_cell p,char ch)
+int is_exist_list(p_cell p,char ch){
 //Function which verify if a node has a character ch among it's children
-{
     int i=0,j = 0;
-    while(p != NULL && i == 0)
-
-    {
-        if(p->character == ch)
-        {
+    while(p != NULL && i == 0){
+        if(p->character == ch){
             j++;
             i = 1;
-        }
-        else
-        {
+        }else{
             j++;
             p = p->next;
         }
     }
-    if(i == 1)
-    {
+    if(i == 1){
         return j;
-    }
-    else {
+    }else {
         return -1;
     }
 }

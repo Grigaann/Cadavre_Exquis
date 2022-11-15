@@ -5,10 +5,17 @@
 int main() {
 
     tree_list trees = initialize_trees();
+    /*
+    tree_list treeList;
+    treeList.name_tree = create_tree();
+    add_word_to_tree("bonjour",treeList.name_tree->root,0);
+    printf("\n   |second word|\n\n");
+    add_word_to_tree("bonsoir",treeList.name_tree->root,0);
+    printf("\n");*/
     print_tree(trees.name_tree->root, 0);
 
-    /*
-    t_tree* tree = create_tree();
+
+    /*t_tree* tree = create_tree();
     tree->root->children = create_list() ;
     tree->root->children.first = add_cell(tree->root->children, 'a');
 
@@ -27,8 +34,10 @@ int main() {
     tree->root->children.first->next->next_node->children.first->next = add_cell(tree->root->children.first->next->next_node->children, 'i');
 
 
-    print_tree(tree->root, 0);
-    printf("%d \n", is_exist_list(tree->root->children.first,'a'));
-    word_in_tree("bel",tree);*/
+    print_tree(tree->root, 0);*/
+    char wordeu[100];
+    printf("Vérifier que ce mot soit dans l'arbre : ");
+    scanf(" %s", wordeu);
+    word_in_tree(wordeu,trees.name_tree);
     return 0;
 }
