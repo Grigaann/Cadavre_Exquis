@@ -36,7 +36,7 @@ int main() {
 
     print_tree(tree->root, 0);*/
     char wordeu[100];
-    printf("Vérifier que ce mot soit dans l'arbre : ");
+    printf("Verify your word is in the tree : ");
     scanf(" %s", wordeu);
     word_in_tree(wordeu,trees.name_tree);
     return 0;

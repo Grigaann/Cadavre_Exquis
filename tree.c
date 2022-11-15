@@ -202,22 +202,3 @@ void word_in_tree(char* word,t_tree* list)
         printf("This word doesn't exist in the tree");
     }
 }
-
-int is_exist_list(p_cell p,char ch){
-//Function which verify if a node has a character ch among it's children
-    int i=0,j = 0;
-    while(p != NULL && i == 0){
-        if(p->character == ch){
-            j++;
-            i = 1;
-        }else{
-            j++;
-            p = p->next;
-        }
-    }
-    if(i == 1){
-        return j;
-    }else {
-        return -1;
-    }
-}
