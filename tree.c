@@ -83,7 +83,7 @@ void add_word_to_tree(char* word, t_node* node, int iteration) {
 //function which returns and fill all the 4 trees (names, adjectives, verbs and adverbs)
         tree_list initialize_trees()
 {
-    FILE *file = fopen("../assets/dictionary_testing.txt", "r");
+    FILE *file = fopen("../assets/dictionary_chill.txt", "r");
     if (file == NULL) {
         printf("\n!!!Error opening file!!!\n");
         exit(1);
@@ -136,6 +136,7 @@ void word_in_tree(char* word,t_tree* list){
     p_node tmp;
     tmp = list->root;
     int i = 0;
+    int yes = 0;
     while(word[i] != '\0'){
         p_cell p = tmp->children.first;
         int j = 0,k=0,exist;
@@ -167,11 +168,12 @@ void word_in_tree(char* word,t_tree* list){
             tmp = p2->next_node;
         }else{
             //If the character has not been found in the t_std_list of the node, then it stops the while loop
+            yes = 1;
             break;
         }
         i++;
     }
-    if (strcmp(tmp->word,word) == 0){
+    if (!yes){
         // If the word contains in the node of the last character of the given word is equal to the given character then we found that the word exists in the tree
         printf("This word exists in the tree !");
 
