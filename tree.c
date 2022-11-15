@@ -81,9 +81,8 @@ void add_word_to_tree(char* word, t_node* node, int iteration) {
 
 
 //function which returns and fill all the 4 trees (names, adjectives, verbs and adverbs)
-        tree_list initialize_trees()
-{
-    FILE *file = fopen("../assets/dictionary_chill.txt", "r");
+tree_list initialize_trees(){
+    FILE *file = fopen("../assets/dictionary_testing.txt", "r");
     if (file == NULL) {
         printf("\n!!!Error opening file!!!\n");
         exit(1);
@@ -94,59 +93,68 @@ void add_word_to_tree(char* word, t_node* node, int iteration) {
     treeList.adj_tree = create_tree();
     treeList.verb_tree = create_tree();
     treeList.adv_tree = create_tree();
+    // Read the file line by line
     while (1){
         char line[256];
-        if (fgets(line, sizeof(line), file) != NULL){ // We open the file line by line until reaching a line NULL,
-            //representing the end of the file
+        // Take each line and returns NULL when end of file
+        if (fgets(line, sizeof(line), file) != NULL){
             char *token = strtok(line, "\t");
-            char *motflechi = token; // This variable will take as value the first word of the line
+            // Stores the first word of the line
+            char *motflechi = token;
             token = strtok(NULL, "\t");
-            char *motbase = token; // This variable will take as value the second word of the line
+            // Stores the base form of the word
+            char *motbase = token;
             token = strtok(NULL, "\n");
-            char *genre = token; // This variable will take as value the type of the word
+            // Stores the type of the word
+            char *genre = token;
 
-            while (token != NULL)
-            {
-                if (strcmp(motflechi, motbase) == 0) { //Make sure the word we read in the file is its Base form.
+            while (token != NULL){
+                //Make sure the word we read in the file is its Base form.
+                if (strcmp(motflechi, motbase) == 0) {
+                    //Check if the word read in the txt is a noun
                     if (strstr(genre, "Nom:") != NULL) {
-                        //We check if the word read in the txt is a noun
-                        add_word_to_tree(motbase, treeList.name_tree->root, 0);
+                        add_word_to_tree(motbase, treeList.name_tree->root, 0)
+                    //Check if the word read in the txt is an Adjective
                     } else if (strstr(genre, "Adj:") != NULL) {
-                        //We check if the word read in the txt is an Adjective
                         add_word_to_tree(motbase, treeList.adj_tree->root, 0);
+                    //Check if the word read in the txt is a Verb
                     } else if (strstr(genre, "Ver:") != NULL) {
-                        //We check if the word read in the txt is a Verb
                         add_word_to_tree(motbase, treeList.verb_tree->root, 0);
+                    //Check if the word read in the txt is an Adverb
                     } else if (strstr(genre, "Adv") != NULL) {
-                        //We check if the word read in the txt is an Adverb
                         add_word_to_tree(motbase, treeList.adv_tree->root, 0);
                     }
                 }
                 token = NULL;
             }
         }else{
+            //No more line, closes while loop and ends the function
             break;
         }
     }
+    //Closes the file we opened earlier
     fclose(file);
     return treeList;
 }
-void word_in_tree(char* word,t_tree* list){
+
 //Function which verify if a given word exists in one of the four tree.
+void word_in_tree(char* word,t_tree* list){
     p_node tmp;
     tmp = list->root;
     int i = 0;
     int yes = 0;
+    //Compares each letter in the word...
     while(word[i] != '\0'){
         p_cell p = tmp->children.first;
-        int j = 0,k=0,exist;
+        int j = 0, k = 0, exist;
         while(k == 0){
-            if(p->character == word[i]){
+            //...Checks if the character exists in the node
+            if (p->character == word[i]){
                 j++;
                 k = 1;
             }else{
                 j++;
-                if(p->next == NULL){
+                if (p->next == NULL){
                     break;
                 }else{
                     p = p->next;
@@ -158,6 +166,7 @@ void word_in_tree(char* word,t_tree* list){
         }else{
             exist = -1 ;
         }
+
         //The variable exist gives us the number of times we need to go to the next cell of the node to get our character
         if(exist != -1){
             //If the character has been found in the list of the node
