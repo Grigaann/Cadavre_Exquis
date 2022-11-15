@@ -4,10 +4,10 @@
 
 int main() {
 
-    /*tree_list trees = initialize_trees();
-    print_tree(trees.name_tree->root, 0);*/
+    tree_list trees = initialize_trees();
+    print_tree(trees.name_tree->root, 0);
 
-
+    /*
     t_tree* tree = create_tree();
     tree->root->children = create_list() ;
     tree->root->children.first = add_cell(tree->root->children, 'a');
@@ -28,7 +28,7 @@ int main() {
 
 
     print_tree(tree->root, 0);
-    /*printf("%d", is_exist_list(tree->root->children.first, 'C'));
+    printf("%d \n", is_exist_list(tree->root->children.first,'a'));
     is_exist_tree("bel",tree);*/
     return 0;
 }

@@ -60,27 +60,26 @@ void print_tree(p_node node, int depth) {
 //function that adds a word to a given tree
 void add_word_to_tree(char* word, t_node* node, int iteration) {
     p_cell current_cell= node->children.first;
-
-    if(word[iteration] == '\0') {
-        node->word = word;
-        printf("%s", word);
+    if(word[iteration] == '\0') { //Todo: word doesn't already exist in node
+        node->word = malloc((strlen(word)+1)*sizeof(char));
+        int t;
+        for(t=0;t< strlen(word);t++){
+            node->word[t]=word[t];
+        }
+        node->word[t]='\0';
+        printf("%s is done.\n",node->word);
         return;
     }
     if (current_cell == NULL){
         node->children.first = add_cell(node->children, word[iteration]);
     }
+    current_cell= node->children.first;
     while (current_cell != NULL) {
         if(current_cell->character == word[iteration]){
             return add_word_to_tree(word, current_cell->next_node, iteration + 1);
         }
         current_cell = current_cell->next;
-
     }
-
-    p_cell added_cell = add_cell(node->children, word[iteration]);
-
-    added_cell->next_node = create_node(word[iteration]);
-
 }
 
 
@@ -135,83 +134,59 @@ tree_list initialize_trees()
                 token = NULL;
             }
         }
-        else
-        {
+        else {
             break;
         }
-
-
     }
     fclose(file);
 
     return treeList;
 }
 
-void is_exist_tree(char* word,t_tree* list)
-{
+void is_exist_tree(char* word,t_tree* list) {
      p_node tmp;
      tmp = list->root;
      int i = 0;
-     while(word[i] != '\0')
-     {
-         int exist = is_exist_list(tmp->children.first, word[i]);
-         if(exist != -1)
-         {
-             p_cell p = tmp->children.first;
-             for(int j = 0; j < exist; j++)
-             {
-                 p = p->next;
 
+     while(word[i] != '\0') {
+         int exist = is_exist_list(tmp->children.first, word[i]);
+
+         if(exist != -1) {
+             p_cell p = tmp->children.first;
+             for(int j = 0; j < exist; j++) {
+                 p = p->next;
              }
              tmp = p->next_node;
-         }
-         else
-         {
+         } else {
              break;
          }
          i++;
-
-
      }
-     printf("%s,%s", tmp->word,word);
-     if (tmp->word == word)
-     {
+
+     printf("tmp->word : %s, word : %s", tmp->word, word);
+     if (tmp->word == word) {
          printf("This word exists in the tree !");
-
-     }
-     else
-     {
+     } else {
          printf("This word doesn't exist in the tree");
-
      }
-
 }
 
-int is_exist_list(p_cell p,char ch)
-{
+int is_exist_list(p_cell p,char letter) {
     int i,j = 0;
-    while(p != NULL && i == 0)
 
-    {
-        if(p->character == ch)
-        {
+    while(p != NULL && !i) {
+        if(p->character == letter) {
             j++;
             i = 1;
-
-        }
-        else
-        {
+        } else {
             j++;
             p = p->next;
         }
+    }
 
-    }
-    if(i == 1)
-    {
+    if(i == 1) {
         return j;
-    }
-    else
-    {
+    } else {
         return -1;
     }
 }
