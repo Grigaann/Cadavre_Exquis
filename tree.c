@@ -83,110 +83,150 @@ void add_word_to_tree(char* word, t_node* node, int iteration) {
 }
 
 
-//function to create and fill all the 4 trees (names, adjectives, verbs and adverbs)
-tree_list initialize_trees()
+//function which returns and fill all the 4 trees (names, adjectives, verbs and adverbs)
+        tree_list initialize_trees()
 {
     FILE *file = fopen("../assets/dictionary_testing.txt", "r");
-
     if (file == NULL) {
         printf("\n!!!Error opening file!!!\n");
         exit(1);
     }
-
     tree_list treeList;
-
-
     //creates the empty 4 trees
     treeList.name_tree = create_tree();
     treeList.adj_tree = create_tree();
     treeList.verb_tree = create_tree();
     treeList.adv_tree = create_tree();
-
     while (1)
     {
         char line[256];
-        if (fgets(line, sizeof(line), file) != NULL)
+        if (fgets(line, sizeof(line), file) != NULL) // We open the file line by line until reaching a line NULL,
+            //representing the end of the file
         {
             char *token = strtok(line, "\t");
-            char *motflechi = token;
+            char *motflechi = token; // This variable will take as value the first word of the line
             token = strtok(NULL, "\t");
-            char *motbase = token;
+            char *motbase = token; // This variable will take as value the second word of the line
             token = strtok(NULL, "\n");
-            char *genre = token;
+            char *genre = token; // This variable will take as value the type of the word
 
             while (token != NULL)
             {
-                if (strcmp(motflechi, motbase) == 0) {
+                if (strcmp(motflechi, motbase) == 0) { //This condition is there to make sure that the word we read in the file is in the Base form.
                     if (strstr(genre, "Nom:") != NULL) {
-                        //printf("nom, %s, %s, %s \n", motflechi, motbase, genre);
+                        //We check if the word read in the txt is a noun
                         add_word_to_tree(motbase, treeList.name_tree->root, 0);
                     } else if (strstr(genre, "Adj:") != NULL) {
-                        //printf("adj, %s, %s, %s \n", motflechi, motbase, genre);
+                        //We check if the word read in the txt is an Adjective
                         add_word_to_tree(motbase, treeList.adj_tree->root, 0);
                     } else if (strstr(genre, "Ver:") != NULL) {
-                        //printf("ver, %s, %s, %s \n", motflechi, motbase, genre);
+                        //We check if the word read in the txt is a Verb
                         add_word_to_tree(motbase, treeList.verb_tree->root, 0);
                     } else if (strstr(genre, "Adv") != NULL) {
-                        //printf("adv, %s, %s, %s \n", motflechi, motbase, genre);
+                        //We check if the word read in the txt is an Adverb
                         add_word_to_tree(motbase, treeList.adv_tree->root, 0);
                     }
                 }
                 token = NULL;
             }
         }
-        else {
+        else
+        {
             break;
         }
     }
     fclose(file);
-
     return treeList;
 }
 
-void is_exist_tree(char* word,t_tree* list) {
-     p_node tmp;
-     tmp = list->root;
-     int i = 0;
+void word_in_tree(const char* word,t_tree* list)
+//Function which verify if a given word exists in one of the four tree.
+{
+    p_node tmp;
+    tmp = list->root;
+    int i = 0;
+    while(word[i] != '\0')
+    {
+        p_cell p = tmp->children.first;
+        int j = 0,k=0,exist;
+        while( p!= NULL && k == 0)
+        {
+            if(p->character == word[i])
+            {
+                j++;
+                k = 1;
+            }
+            else
+            {
+                j++;
+                p = p->next;
+            }
 
-     while(word[i] != '\0') {
-         int exist = is_exist_list(tmp->children.first, word[i]);
+        }
+        if(k == 1)
+        {
+            exist = j;
+        }
+        else
+        {
+            exist = -1 ;
+        }
 
-         if(exist != -1) {
-             p_cell p = tmp->children.first;
-             for(int j = 0; j < exist; j++) {
-                 p = p->next;
-             }
-             tmp = p->next_node;
-         } else {
-             break;
-         }
-         i++;
-     }
+        //The variable exist gives us the number of times we need to go to the next cell of the node to get our character
+        if(exist != -1)
+            //If the character has been found in the list of the node
+        {
+            p_cell p2= tmp->children.first;
+            for(int n = 1; n < exist; n++)
+            {
+                p2 = p2->next;
 
-     printf("tmp->word : %s, word : %s", tmp->word, word);
-     if (tmp->word == word) {
-         printf("This word exists in the tree !");
-     } else {
-         printf("This word doesn't exist in the tree");
-     }
+            }
+            tmp = p2->next_node;
+        }
+        else
+            //If the character has not been found in the t_std_list of the node, then it stops the while loop
+        {
+            break;
+        }
+        i++;
+
+
+    }
+    if (tmp->word == word) // If the word contains in the node of the last character of the given word is equal to the given character then we found that the word exists in the tree
+    {
+        printf("This word exists in the tree !");
+
+    }
+    else
+    {
+        printf("This word doesn't exist in the tree");
+    }
 }
 
-int is_exist_list(p_cell p,char letter) {
-    int i,j = 0;
+int is_exist_list(p_cell p,char ch)
+//Function which verify if a node has a character ch among it's children
+{
+    int i=0,j = 0;
+    while(p != NULL && i == 0)
 
-    while(p != NULL && !i) {
-        if(p->character == letter) {
+    {
+        if(p->character == ch)
+        {
             j++;
             i = 1;
-        } else {
+        }
+        else
+        {
             j++;
             p = p->next;
         }
     }
-
-    if(i == 1) {
+    if(i == 1)
+    {
         return j;
-    } else {
+    }
+    else {
         return -1;
     }
 }

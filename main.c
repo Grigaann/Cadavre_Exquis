@@ -29,6 +29,6 @@ int main() {
 
     print_tree(tree->root, 0);
     printf("%d \n", is_exist_list(tree->root->children.first,'a'));
-    is_exist_tree("bel",tree);*/
+    word_in_tree("bel",tree);*/
     return 0;
 }
