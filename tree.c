@@ -131,74 +131,51 @@ void add_word_to_tree(char* word, t_node* node, int iteration) {
     fclose(file);
     return treeList;
 }
-void word_in_tree(char* word,t_tree* list)
+void word_in_tree(char* word,t_tree* list){
 //Function which verify if a given word exists in one of the four tree.
-{
     p_node tmp;
     tmp = list->root;
     int i = 0;
-    while(word[i] != '\0')
-    {
+    while(word[i] != '\0'){
         p_cell p = tmp->children.first;
         int j = 0,k=0,exist;
-        while(k == 0)
-        {
-            if(p->character == word[i])
-            {
-
+        while(k == 0){
+            if(p->character == word[i]){
                 j++;
                 k = 1;
-            }
-            else
-            {
+            }else{
                 j++;
-                if(p->next == NULL)
-                {
+                if(p->next == NULL){
                     break;
-                }
-                else
-                {
+                }else{
                     p = p->next;
                 }
             }
-
         }
-        if(k == 1)
-        {
+        if(k == 1){
             exist = j;
-        }
-        else
-        {
+        }else{
             exist = -1 ;
         }
-
         //The variable exist gives us the number of times we need to go to the next cell of the node to get our character
-        if(exist != -1)
+        if(exist != -1){
             //If the character has been found in the list of the node
-        {
             p_cell p2= tmp->children.first;
-            for(int n = 1; n < exist; n++)
-            {
+            for(int n = 1; n < exist; n++){
                 p2 = p2->next;
-
             }
             tmp = p2->next_node;
-        }
-        else
+        }else{
             //If the character has not been found in the t_std_list of the node, then it stops the while loop
-        {
             break;
         }
         i++;
-
     }
-    if (strcmp(tmp->word,word) == 0) // If the word contains in the node of the last character of the given word is equal to the given character then we found that the word exists in the tree
-    {
+    if (strcmp(tmp->word,word) == 0){
+        // If the word contains in the node of the last character of the given word is equal to the given character then we found that the word exists in the tree
         printf("This word exists in the tree !");
 
-    }
-    else
-    {
+    }else{
         printf("This word doesn't exist in the tree");
     }
 }
