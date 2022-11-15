@@ -1,0 +1,58 @@
+Index: tree.c
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\n// Created by FenrisÃºlfr on 30/10/2022.\n//\n#include \"tree.h\"\n#include <string.h>\n\n\n\n//function that initialize a tree\nt_tree* create_tree() {\n    t_tree* tree = malloc(sizeof(p_node));\n    p_node first_node = create_node('-');\n    tree->root = first_node;\n    tree->root->children = create_list();\n    tree->root->children.first = NULL;\n    return tree;\n}\n\n\n//function to get the base form of a string coming from the dictionary\nchar* get_word(char* token) {\n    char* word = malloc(sizeof(char) * strlen(token));\n    int i = 0;\n    while (token[i] != '\\0') {\n        if (token[i] == '\\t') {\n            word[i] = '\\0';\n            break;\n        }\n        word[i] = token[i];\n        i++;\n    }\n    return word;\n}\n\n\n//function that print the tree (useful for testing and debugging)\nvoid print_tree(p_node node, int depth) {\n    if (node == NULL) {\n        return;\n    }\n\n    for (int i = 0; i < depth; i++) {\n        printf(\"\\t\");\n    }\n\n    printf(\"%c\\n\", node->character);\n    if(node->children.first != NULL){\n        p_cell current_cell = node->children.first;\n        do {\n\n            print_tree(current_cell->next_node, depth + 1);\n            current_cell = current_cell->next;\n        } while(current_cell != NULL);\n\n\n    }\n}\n\n\n//function that adds a word to a given tree\nvoid add_word_to_tree(char* word, t_node* node, int iteration) {\n    p_cell current_cell= node->children.first;\n    if(word[iteration] == '\\0') { //Todo: word doesn't already exist in node\n        node->word = malloc((strlen(word)+1)*sizeof(char));\n        int t;\n        for(t=0;t< strlen(word);t++){\n            node->word[t]=word[t];\n        }\n        node->word[t]='\\0';\n        printf(\"%s is done.\\n\",node->word);\n        return;\n    }\n    if (current_cell == NULL){\n        node->children.first = add_cell(node->children, word[iteration]);\n    }\n    current_cell= node->children.first;\n    while (current_cell != NULL) {\n        if(current_cell->character == word[iteration]){\n            return add_word_to_tree(word, current_cell->next_node, iteration + 1);\n        }\n        current_cell = current_cell->next;\n    }\n}\n\n\n//function to create and fill all the 4 trees (names, adjectives, verbs and adverbs)\ntree_list initialize_trees()\n{\n    FILE *file = fopen(\"../assets/dictionary_testing.txt\", \"r\");\n\n    if (file == NULL) {\n        printf(\"\\n!!!Error opening file!!!\\n\");\n        exit(1);\n    }\n\n    tree_list treeList;\n\n\n    //creates the empty 4 trees\n    treeList.name_tree = create_tree();\n    treeList.adj_tree = create_tree();\n    treeList.verb_tree = create_tree();\n    treeList.adv_tree = create_tree();\n\n    while (1)\n    {\n        char line[256];\n        if (fgets(line, sizeof(line), file) != NULL)\n        {\n            char *token = strtok(line, \"\\t\");\n            char *motflechi = token;\n            token = strtok(NULL, \"\\t\");\n            char *motbase = token;\n            token = strtok(NULL, \"\\n\");\n            char *genre = token;\n\n            while (token != NULL)\n            {\n                if (strcmp(motflechi, motbase) == 0) {\n                    if (strstr(genre, \"Nom:\") != NULL) {\n                        //printf(\"nom, %s, %s, %s \\n\", motflechi, motbase, genre);\n                        add_word_to_tree(motbase, treeList.name_tree->root, 0);\n                    } else if (strstr(genre, \"Adj:\") != NULL) {\n                        //printf(\"adj, %s, %s, %s \\n\", motflechi, motbase, genre);\n                        add_word_to_tree(motbase, treeList.adj_tree->root, 0);\n                    } else if (strstr(genre, \"Ver:\") != NULL) {\n                        //printf(\"ver, %s, %s, %s \\n\", motflechi, motbase, genre);\n                        add_word_to_tree(motbase, treeList.verb_tree->root, 0);\n                    } else if (strstr(genre, \"Adv\") != NULL) {\n                        //printf(\"adv, %s, %s, %s \\n\", motflechi, motbase, genre);\n                        add_word_to_tree(motbase, treeList.adv_tree->root, 0);\n                    }\n                }\n                token = NULL;\n            }\n        }\n        else {\n            break;\n        }\n    }\n    fclose(file);\n\n    return treeList;\n}\n\nvoid is_exist_tree(char* word,t_tree* list) {\n     p_node tmp;\n     tmp = list->root;\n     int i = 0;\n\n     while(word[i] != '\\0') {\n         int exist = is_exist_list(tmp->children.first, word[i]);\n\n         if(exist != -1) {\n             p_cell p = tmp->children.first;\n             for(int j = 0; j < exist; j++) {\n                 p = p->next;\n             }\n             tmp = p->next_node;\n         } else {\n             break;\n         }\n         i++;\n     }\n\n     printf(\"tmp->word : %s, word : %s\", tmp->word, word);\n     if (tmp->word == word) {\n         printf(\"This word exists in the tree !\");\n     } else {\n         printf(\"This word doesn't exist in the tree\");\n     }\n}\n\nint is_exist_list(p_cell p,char letter) {\n    int i,j = 0;\n\n    while(p != NULL && !i) {\n        if(p->character == letter) {\n            j++;\n            i = 1;\n        } else {\n            j++;\n            p = p->next;\n        }\n    }\n\n    if(i == 1) {\n        return j;\n    } else {\n        return -1;\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/tree.c b/tree.c
+--- a/tree.c	(revision 743538a6a4e2199382742a839e8b026cd2b825c2)
++++ b/tree.c	(date 1668505229871)
+@@ -76,6 +76,7 @@
+     current_cell= node->children.first;
+     while (current_cell != NULL) {
+         if(current_cell->character == word[iteration]){
++            printf("%c is already in the tree.\n",word[iteration]);
+             return add_word_to_tree(word, current_cell->next_node, iteration + 1);
+         }
+         current_cell = current_cell->next;
+@@ -102,20 +103,18 @@
+     treeList.verb_tree = create_tree();
+     treeList.adv_tree = create_tree();
+ 
+-    while (1)
+-    {
++    while (1) {
+         char line[256];
+-        if (fgets(line, sizeof(line), file) != NULL)
+-        {
++        if (fgets(line, sizeof(line), file) != NULL) {
+             char *token = strtok(line, "\t");
+             char *motflechi = token;
+             token = strtok(NULL, "\t");
+             char *motbase = token;
++            printf("%s\n", motbase);
+             token = strtok(NULL, "\n");
+             char *genre = token;
+ 
+-            while (token != NULL)
+-            {
++            while (token != NULL) {
+                 if (strcmp(motflechi, motbase) == 0) {
+                     if (strstr(genre, "Nom:") != NULL) {
+                         //printf("nom, %s, %s, %s \n", motflechi, motbase, genre);
+@@ -133,13 +132,11 @@
+                 }
+                 token = NULL;
+             }
+-        }
+-        else {
++        } else {
+             break;
+         }
+     }
+     fclose(file);
+-
+     return treeList;
+ }
+ 
