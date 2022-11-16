@@ -113,7 +113,7 @@ tree_list initialize_trees(){
                 if (strcmp(motflechi, motbase) == 0) {
                     //Check if the word read in the txt is a noun
                     if (strstr(genre, "Nom:") != NULL) {
-                        add_word_to_tree(motbase, treeList.name_tree->root, 0)
+                        add_word_to_tree(motbase, treeList.name_tree->root, 0);
                     //Check if the word read in the txt is an Adjective
                     } else if (strstr(genre, "Adj:") != NULL) {
                         add_word_to_tree(motbase, treeList.adj_tree->root, 0);
