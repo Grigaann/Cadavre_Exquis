@@ -150,7 +150,7 @@ tree_list initialize_trees(){
     return treeList;
 }
 
-// Function which verify if a given word exists in one of the four tree.
+// Function which verify if a given word exists in one tree.
 void word_in_tree(char* word,t_tree* list){
     p_node tmp;
     tmp = list->root;
@@ -200,7 +200,6 @@ void word_in_tree(char* word,t_tree* list){
         // If the word contains in the node of the last character of the given word is equal to the given character then we found that the word exists in the tree
         if(strstr(tmp->word, word) != NULL) {
             printf("The word '%s' exists in the tree.\n", word);
-
         }
     }else{
         printf("This word doesn't exist in the tree.\n");

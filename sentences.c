@@ -9,20 +9,16 @@ char* get_random_word(t_tree* tree){
     p_node current_node = tree->root;
     p_cell current_cell;
     int tree_depth = get_depth(current_node);
-    printf("tree depth = %d\n",tree_depth);
-    char* word = NULL;
 
     do{
         // Selects a random depth depending on the maximum depth of the tree
         int rand_depth = rand()%tree_depth;
-        //printf("rand_depth = %d\n",rand_depth);
 
 
         // Goes through the nodes
         for (int depth = 0 ; depth < rand_depth; depth++){
             // Selects a random cell in the node
             int rand_cell = rand()%get_length(current_node->children);
-            //printf("rand_cell = %d/%d\n",tree_depth,get_length(current_node->children));
             current_cell = current_node->children.first;
 
             // Goes through the cells
@@ -32,8 +28,7 @@ char* get_random_word(t_tree* tree){
         }
     }while (current_cell->next->next_node->word == NULL);
 
-    word = current_cell->next_node->word;
-    for (int letter=0;word[letter]!='\0';letter++)
-        printf("word is %c\n",word[letter]);
-    return word;
+    for (int letter=0;current_cell->next_node->word[letter]!='\0';letter++)
+        printf("word is %c\n",current_cell->next_node->word[letter]);
+    return current_cell->next_node->word;
 }
