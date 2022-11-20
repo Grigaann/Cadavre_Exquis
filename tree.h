@@ -21,8 +21,8 @@ typedef struct s_list_tree{
 void print_tree(p_node node, int depth);
 t_tree* create_tree();
 tree_list initialize_trees();
-int get_depth(p_node node);
 void add_word_to_tree(char* word, t_node* node, int iteration);
+char* get_word(char* token);
 void word_in_tree(char* word,t_tree* list);
 
 #endif //CADAVRE_EXQUIS_TREE_H

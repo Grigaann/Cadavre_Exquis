@@ -20,7 +20,6 @@ typedef struct s_std_list {
 
 t_std_list create_list();
 p_cell add_cell(t_std_list list, char character);
-int get_length(t_std_list list);
 
 typedef struct s_node {
     char character;
