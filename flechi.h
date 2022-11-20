@@ -1,7 +1,3 @@
-//
-// Created by Tao SAINT PAUL AMOURDAM on 15/11/2022.
-//
-
 #ifndef CADAVRE_EXQUIS_FLECHI_H
 #define CADAVRE_EXQUIS_FLECHI_H
 #define Mas 1

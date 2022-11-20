@@ -12,13 +12,13 @@ int main() {
     int bool = 1;
 
     tree_list trees = initialize_trees();
-    printf("Welcome in the Automatic sentences generator.\n\n");
+    printf("Welcome in the Automatic sentences generator.\n");
     while(bool) {
-        printf("Enter :\n1 if you wish to see the tree\n"
-               "2 if you wish to search for a word\n"
-               //"Enter 3 if you wish to create a homemade sentence\n"
-               "4 to get a random word\n"
-               "\n0 if you want to exit this program\n\n");
+        printf("\nEnter :\n 1 if you wish to see a tree\n"
+               " 2 if you wish to search for a word\n"
+               //" 3 if you wish to create a homemade sentence (wip)\n"
+               //" 4 to get a random word (wip)\n"
+               "\n 0 if you want to exit this program\n\n");
         scanf("%d", &ans_menu1);
         switch (ans_menu1) {
             case 0:
@@ -69,7 +69,7 @@ int main() {
                 //create_sentence();
                 break;
             case 4:
-                printf("%s", get_random_word(trees.name_tree));
+                //printf("%s", get_random_word(trees.name_tree));
                 break;
             default:
                 break;
