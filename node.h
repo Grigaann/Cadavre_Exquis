@@ -1,6 +1,3 @@
-//
-// Created by Fenrisúlfr on 30/10/2022.
-//
 #include <stdio.h>
 #include <stdlib.h>
 #include "flechi.h"
@@ -10,7 +7,6 @@
 struct s_node;
 
 typedef struct cell {
-    char character;
     struct s_node* next_node;
     struct cell* next;
 } t_cell, *p_cell;
@@ -31,6 +27,5 @@ typedef struct s_node {
 } t_node, *p_node;
 
 p_node create_node(char character);
-int exists(t_node* node);
 
 #endif //CADAVRE_EXQUIS_NODE_H

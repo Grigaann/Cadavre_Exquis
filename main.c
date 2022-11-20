@@ -10,16 +10,17 @@ int main() {
     char wordeu[100];
     int ans_menu1, ans_menu2;
     int bool = 1;
+    char which_tree;
 
     tree_list trees = initialize_trees();
-    printf("Welcome in the Automatic sentences generator.\n\n");
+    printf("Welcome in the Automatic sentences generator.\n");
     while(bool) {
-        printf("Enter :\n1 if you wish to see the tree\n"
-               "2 if you wish to search for a word\n"
-               //"Enter 3 if you wish to create a homemade sentence\n"
-               "4 to get a random word\n"
-               "\n0 if you want to exit this program\n\n");
-        scanf("%d", &ans_menu1);
+        printf("\nEnter :\n 1 if you wish to see a tree\n"
+               " 2 if you wish to search for a word\n"
+               //" 3 if you wish to create a homemade sentence (wip)\n"
+               //" 4 to get a random word (wip)\n"
+               "\n 0 if you want to exit this program\n\n");
+        scanf(" %d", &ans_menu1);
         switch (ans_menu1) {
             case 0:
                 printf("See you later.");
@@ -61,15 +62,34 @@ int main() {
                 }
                 break;
             case 2:
-                printf("Enter the word you are looking for :");
+                printf("Enter the base form of the word you are looking for :");
                 scanf(" %s", wordeu);
-                word_in_tree(wordeu, trees.name_tree);
+                printf("Enter\n"
+                       "'n' if it is a noun\n"
+                       "'v' if it is a verb\n"
+                       "'a' for an adjective\n"
+                       "'A' for an adverb\n");
+                scanf(" %c",&which_tree);
+                switch (which_tree) {
+                    case 'n':
+                        word_in_tree(wordeu, trees.name_tree);
+                        break;
+                    case 'v':
+                        word_in_tree(wordeu, trees.verb_tree);
+                        break;
+                    case 'a':
+                        word_in_tree(wordeu, trees.adj_tree);
+                        break;
+                    case 'A':
+                        word_in_tree(wordeu, trees.adv_tree);
+                        break;
+                }
                 break;
             case 3:
                 //create_sentence();
                 break;
             case 4:
-                printf("%s", get_random_word(trees.name_tree));
+                printf(" %s", get_random_word(trees.name_tree));
                 break;
             default:
                 break;
