@@ -18,5 +18,19 @@
 #define IPre 1000
 #define IImp 2000
 #define SPre 3000
+// int = PL + P1 + IPRE
+// personne ? int%1000 - int%100 == PX
+
+
+typedef struct cell_f{
+    int form;
+    char* word;
+    struct list_flechi* next;
+}cell_flechi;
+
+
+typedef struct list_flechi{
+    cell_flechi* first;
+}list_flechi;
 
 #endif //CADAVRE_EXQUIS_FLECHI_H

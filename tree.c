@@ -82,7 +82,7 @@ void add_word_to_tree(char* word, t_node* node, int iteration) {
 
 //function which returns and fill all the 4 trees (names, adjectives, verbs and adverbs)
 tree_list initialize_trees(){
-    FILE *file = fopen("../assets/dictionary_testing.txt", "r");
+    FILE *file = fopen("../assets/dictionary_chill.txt", "r");
     if (file == NULL) {
         printf("\n!!!Error opening file!!!\n");
         exit(1);
@@ -113,7 +113,7 @@ tree_list initialize_trees(){
                 if (strcmp(motflechi, motbase) == 0) {
                     //Check if the word read in the txt is a noun
                     if (strstr(genre, "Nom:") != NULL) {
-                        add_word_to_tree(motbase, treeList.name_tree->root, 0)
+                        add_word_to_tree(motbase, treeList.name_tree->root, 0);
                     //Check if the word read in the txt is an Adjective
                     } else if (strstr(genre, "Adj:") != NULL) {
                         add_word_to_tree(motbase, treeList.adj_tree->root, 0);
@@ -124,7 +124,21 @@ tree_list initialize_trees(){
                     } else if (strstr(genre, "Adv") != NULL) {
                         add_word_to_tree(motbase, treeList.adv_tree->root, 0);
                     }
-                }
+                }/* else {
+                    //Check if the word read in the txt is a noun
+                    if (strstr(genre, "Nom:") != NULL) {
+
+                        //Check if the word read in the txt is an Adjective
+                    } else if (strstr(genre, "Adj:") != NULL) {
+
+                        //Check if the word read in the txt is a Verb
+                    } else if (strstr(genre, "Ver:") != NULL) {
+
+                        //Check if the word read in the txt is an Adverb
+                    } else if (strstr(genre, "Adv") != NULL) {
+
+                    }
+                }*/
                 token = NULL;
             }
         }else{
@@ -182,11 +196,13 @@ void word_in_tree(char* word,t_tree* list){
         }
         i++;
     }
-    if (!yes){
+    if (!yes && tmp->word != NULL){
         // If the word contains in the node of the last character of the given word is equal to the given character then we found that the word exists in the tree
-        printf("This word exists in the tree !");
+        if(strstr(tmp->word, word) != NULL) {
+            printf("The word [%s] exists in the tree.\n", word);
 
+        }
     }else{
-        printf("This word doesn't exist in the tree");
+        printf("This word doesn't exist in the tree.\n");
     }
 }

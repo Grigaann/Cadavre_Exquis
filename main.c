@@ -12,7 +12,7 @@ int main() {
     printf("\n   |second word|\n\n");
     add_word_to_tree("bonsoir",treeList.name_tree->root,0);
     printf("\n");*/
-    print_tree(trees.name_tree->root, 0);
+    print_tree(trees.verb_tree->root, 0);
 
 
     /*t_tree* tree = create_tree();
@@ -38,6 +38,6 @@ int main() {
     char wordeu[100];
     printf("Verify your word is in the tree : ");
     scanf(" %s", wordeu);
-    word_in_tree(wordeu,trees.name_tree);
+    word_in_tree(wordeu,trees.verb_tree);
     return 0;
 }
