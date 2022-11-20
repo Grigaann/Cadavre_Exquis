@@ -16,20 +16,24 @@ t_tree* create_tree() {
     return tree;
 }
 
+// Function that gets the depth of a given tree
+int get_depth(p_node node){
+    // Leaf is reached
+    if (!node->children.first)
+        return 0;
 
-//function to get the base form of a string coming from the dictionary
-char* get_word(char* token) {
-    char* word = malloc(sizeof(char) * strlen(token));
-    int i = 0;
-    while (token[i] != '\0') {
-        if (token[i] == '\t') {
-            word[i] = '\0';
-            break;
+    // Check for all children
+    int max_depth = 0;
+    p_cell it = node->children.first;
+    while (it != NULL){
+        int depth_it = get_depth(it->next_node);
+        // Compare and find the maximum depth between them
+        if (max_depth < depth_it) {
+            max_depth = depth_it;
         }
-        word[i] = token[i];
-        i++;
+        it = it->next;
     }
-    return word;
+    return max_depth + 1 ;
 }
 
 

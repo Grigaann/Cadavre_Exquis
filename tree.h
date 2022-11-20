@@ -22,7 +22,7 @@ void print_tree(p_node node, int depth);
 t_tree* create_tree();
 tree_list initialize_trees();
 void add_word_to_tree(char* word, t_node* node, int iteration);
-char* get_word(char* token);
+int get_depth(p_node node);
 void word_in_tree(char* word,t_tree* list);
 
 #endif //CADAVRE_EXQUIS_TREE_H
