@@ -54,3 +54,14 @@ p_cell add_cell(t_std_list list, char character) {
 
     return new_cell;
 }
+
+// Function that finds the number of cells in a given list
+int get_length(t_std_list list){
+    int cpt = 0;
+    p_cell cell = list.first;
+    while (cell){
+        cell = cell->next;
+        cpt++;
+    }
+    return cpt;
+}

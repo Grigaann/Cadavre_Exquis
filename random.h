@@ -16,6 +16,6 @@ typedef struct tagMTRand {
 MTRand seedRand(unsigned long seed);
 unsigned long genRandLong(MTRand* rand);
 double genRand(MTRand* rand);
-int grand(int occurrences);
+int g_rand(int cap);
 
 #endif //CADAVRE_EXQUIS_RANDOM_H

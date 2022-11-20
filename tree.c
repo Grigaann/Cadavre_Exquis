@@ -1,5 +1,5 @@
 //
-// Created by FenrisÃºlfr on 30/10/2022.
+// Created by Fenrisulfr on 30/10/2022.
 //
 #include "tree.h"
 #include <string.h>
@@ -16,36 +16,40 @@ t_tree* create_tree() {
     return tree;
 }
 
+// Function that gets the depth of a given tree
+int get_depth(p_node node){
+    // Leaf is reached
+    if (!node->children.first)
+        return 0;
 
-//function to get the base form of a string coming from the dictionary
-char* get_word(char* token) {
-    char* word = malloc(sizeof(char) * strlen(token));
-    int i = 0;
-    while (token[i] != '\0') {
-        if (token[i] == '\t') {
-            word[i] = '\0';
-            break;
+    // Check for all children
+    int max_depth = 0;
+    p_cell it = node->children.first;
+    while (it != NULL){
+        int depth_it = get_depth(it->next_node);
+        // Compare and find the maximum depth between them
+        if (max_depth < depth_it) {
+            max_depth = depth_it;
         }
-        word[i] = token[i];
-        i++;
+        it = it->next;
     }
-    return word;
+    return max_depth + 1 ;
 }
 
 
 //function that print the tree (useful for testing and debugging)
-void print_tree(p_node node, int depth) {
+void print_tree(p_node node, int deepness) {
     if (node == NULL) {
         return;
     }
-    for (int i = 0; i < depth; i++) {
+    for (int i = 0; i < deepness; i++) {
         printf("\t");
     }
     printf("%c\n", node->character);
     if(node->children.first != NULL){
         p_cell current_cell = node->children.first;
         do {
-            print_tree(current_cell->next_node, depth + 1);
+            print_tree(current_cell->next_node, deepness + 1);
             current_cell = current_cell->next;
         } while(current_cell != NULL);
     }
@@ -82,7 +86,7 @@ void add_word_to_tree(char* word, t_node* node, int iteration) {
 
 //function which returns and fill all the 4 trees (names, adjectives, verbs and adverbs)
 tree_list initialize_trees(){
-    FILE *file = fopen("../assets/dictionary_testing.txt", "r");
+    FILE *file = fopen("../assets/dictionary_chill.txt", "r");
     if (file == NULL) {
         printf("\n!!!Error opening file!!!\n");
         exit(1);
@@ -114,13 +118,13 @@ tree_list initialize_trees(){
                     //Check if the word read in the txt is a noun
                     if (strstr(genre, "Nom:") != NULL) {
                         add_word_to_tree(motbase, treeList.name_tree->root, 0);
-                    //Check if the word read in the txt is an Adjective
+                        //Check if the word read in the txt is an Adjective
                     } else if (strstr(genre, "Adj:") != NULL) {
                         add_word_to_tree(motbase, treeList.adj_tree->root, 0);
-                    //Check if the word read in the txt is a Verb
+                        //Check if the word read in the txt is a Verb
                     } else if (strstr(genre, "Ver:") != NULL) {
                         add_word_to_tree(motbase, treeList.verb_tree->root, 0);
-                    //Check if the word read in the txt is an Adverb
+                        //Check if the word read in the txt is an Adverb
                     } else if (strstr(genre, "Adv") != NULL) {
                         add_word_to_tree(motbase, treeList.adv_tree->root, 0);
                     }
@@ -184,9 +188,9 @@ void word_in_tree(char* word,t_tree* list){
     }
     if (!yes){
         // If the word contains in the node of the last character of the given word is equal to the given character then we found that the word exists in the tree
-        printf("This word exists in the tree !");
+        printf("This word exists in the tree !\n");
 
     }else{
-        printf("This word doesn't exist in the tree");
+        printf("This word doesn't exist in the tree.\n");
     }
 }

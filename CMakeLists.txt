@@ -10,4 +10,4 @@ add_executable(Cadavre_Exquis
         node.c
         node.h
         tree.c
-        tree.h flechi.c flechi.h)
+        tree.h flechi.c flechi.h sentences.c sentences.h)
